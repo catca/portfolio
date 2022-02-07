@@ -1,11 +1,13 @@
 import * as THREE from 'three'
-import { useEffect, useRef, useState, Suspense } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useEffect, useRef, useState, Suspense, useMemo } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useCursor, MeshReflectorMaterial, Image, Text, Environment } from '@react-three/drei'
 import { useRoute, useLocation } from 'wouter'
+import randomColor from 'randomcolor'
 import getUuid from 'uuid-by-string'
 
 const GOLDENRATIO = 1.61803398875
+const randomPos = (min = 5, max = -5) => Math.random() * (max - min) + min
 
 const pexel = (id) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260`
 const images = [
@@ -19,10 +21,13 @@ const images = [
 const stars = new Array(1000);
 
 export default function Gallery() {
+  const [zoom, setZoom] = useState(false)
+  const [focus, setFocus] = useState({})
+  const momentsArray = useMemo(() => Array.from({ length: 500 }, () => ({ color: randomColor(), position: [randomPos(), randomPos(), randomPos()] })), [])
   return (
     <Suspense fallback={null}>
-      <directionalLight color={'#c0c0c0'} position={[0.75, 1, 0.5]} intentsity={300}/>
-      <directionalLight color={'#c0c0c0'} position={[-0.75, -1, 0.5]} intentsity={300}/>
+      <directionalLight color={'#c0c0c0'} position={[-2.2, 0, 3.2]} intentsity={300} />
+      <directionalLight color={'#c0c0c0'} position={[2.2, 0, 3.2]} intentsity={300} />
       <color attach="background" args={['#191920']} />
       <fog attach="fog" args={['#191920', 0, 15]} />
       <Environment preset="city" />
@@ -44,14 +49,7 @@ export default function Gallery() {
           />
         </mesh>
       </group>
-      {stars.map((props, index) => {
-        return (
-          <mesh key={index} position={[Math.random() * 10, Math.random() * 10, Math.random() * 10]}>
-            <tetrahedronGeometry args={[2, 0]}/>
-            <meshPhongMaterial color={'#FFFFFF'}/>
-          </mesh>
-        )
-      })}
+      <Cloud momentsData={momentsArray} zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))} />
     </Suspense>
   )
 }
@@ -73,14 +71,13 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
     }
   })
   useFrame((state, dt) => {
-     // damp 함수 안의 변수 변경 0, 1, 3 => 0, 1, 2
-     state.camera.position.lerp(p, THREE.MathUtils.damp(0, 1, 2, dt))
-     // 0, 1, 3 => 1(중요), 1, 10
-     state.camera.quaternion.slerp(q, THREE.MathUtils.damp(1, 1, 10, dt))
+    // damp 함수 안의 변수 변경 0, 1, 3 => 0, 1, 2
+    state.camera.position.lerp(p, THREE.MathUtils.damp(0, 1, 2, dt))
+    // 0, 1, 3 => 1(중요), 1, 10
+    state.camera.quaternion.slerp(q, THREE.MathUtils.damp(1, 1, 10, dt))
   })
   const handleClick = (e) => {
-    e.stopPropagation(); 
-    console.log(e.object);
+    e.stopPropagation();
     setLocation(clicked.current === e.object ? '/' : '/item/' + e.object.name)
   }
   return (
@@ -101,7 +98,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
   const name = getUuid(url)
   useCursor(hovered)
   useFrame((state) => {
-    image.current.material.zoom = hovered ? 0.5 : 0.75 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 4 
+    image.current.material.zoom = hovered ? 0.5 : 0.75 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 4
     image.current.scale.x = THREE.MathUtils.lerp(image.current.scale.x, 0.85 * (hovered ? 0.85 : 1), 0.1)
     image.current.scale.y = THREE.MathUtils.lerp(image.current.scale.y, 0.9 * (hovered ? 0.905 : 1), 0.1)
     frame.current.material.color.lerp(c.set(hovered ? 'orange' : 'white').convertSRGBToLinear(), 0.1)
@@ -110,7 +107,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
     <group {...props}>
       <mesh
         name={name}
-        onPointerOver={(e) => {e.stopPropagation(); hover(true)}}
+        onPointerOver={(e) => { e.stopPropagation(); hover(true) }}
         onPointerOut={() => hover(false)}
         scale={[GOLDENRATIO, 1, 0.05]}
         position={[0, GOLDENRATIO / 2, 0]}>
@@ -127,4 +124,20 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
       </Text>
     </group>
   )
+}
+
+function Cloud({ momentsData, zoomToView }) {
+  return momentsData.map(({ position, color }, i) => (
+    <mesh key={i} position={position} onClick={(e) => zoomToView(e.object.position)} rotation={position}>
+      <tetrahedronGeometry
+        attach="geometry"
+        args={[0.02, 0]}
+        applyMatrix={new THREE.Matrix4().makeRotationAxis(
+          new THREE.Vector3(2, 0, -1).normalize(),
+          Math.atan(Math.sqrt(2))
+        )}
+      />
+      <meshStandardMaterial color={color} />
+    </mesh>
+  ))
 }
