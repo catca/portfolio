@@ -1,8 +1,9 @@
 import * as THREE from 'three'
 import { useEffect, useRef, useState, Suspense, useMemo } from 'react'
+import Router from 'next/router'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useCursor, MeshReflectorMaterial, Image, Text, Environment } from '@react-three/drei'
-import { useRoute, useLocation } from 'wouter'
+import { useCursor, MeshReflectorMaterial, Image, Text, Environment, PerspectiveCamera, Html, Reflector } from '@react-three/drei'
+import { useRoute, useLocation, Link } from 'wouter'
 import randomColor from 'randomcolor'
 import getUuid from 'uuid-by-string'
 
@@ -12,11 +13,11 @@ const randomPos = (min = 5, max = -5) => Math.random() * (max - min) + min
 const pexel = (id) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260`
 const images = [
   // Front
-  { position: [0, 0, 2], rotation: [0, 0, 0], url: '/img/gallery/portfolio.PNG', intro: 'portfolio' },
+  { position: [0, 0, 2], rotation: [0, 0, 0], url: '/img/gallery/portfolio.PNG', intro: 'portfolio', href: 'http://localhost:3000' },
   // Left
-  { position: [-2.2, 0, 2.2], rotation: [0, Math.PI / 7, 0], url: '/img/gallery/shiningstargram.PNG', intro: 'shiningstargram' },
+  { position: [-2.2, 0, 2.2], rotation: [0, Math.PI / 7, 0], url: '/img/gallery/shiningstargram.PNG', intro: 'shiningstargram', href: 'https://shiningstargram.vercel.app' },
   // Right
-  { position: [2.2, 0, 2.2], rotation: [0, -Math.PI / 7, 0], url: '/img/gallery/bunnymarket.PNG', intro: 'bunnymarket' },
+  { position: [2.2, 0, 2.2], rotation: [0, -Math.PI / 7, 0], url: '/img/gallery/bunnymarket.PNG', intro: 'bunnymarket', href: 'http://bunnymarket.o-r.kr:3000' },
 ]
 const stars = new Array(1000);
 
@@ -26,26 +27,23 @@ export default function Gallery() {
   const momentsArray = useMemo(() => Array.from({ length: 500 }, () => ({ color: randomColor(), position: [randomPos(), randomPos(), randomPos()] })), [])
   return (
     <Suspense fallback={null}>
-      <directionalLight color={'#c0c0c0'} position={[-2.2, 0, 3.2]} intentsity={300} />
-      <directionalLight color={'#c0c0c0'} position={[2.2, 0, 3.2]} intentsity={300} />
+      {/* <directionalLight color={'#FF0000'} position={[0, 10, 0]} intentsity={1} castShadow/>
+      <directionalLight color={'#0000FF'} position={[0, 10, 0]} intentsity={1} castShadow/> */}
       <color attach="background" args={['#191920']} />
-      <fog attach="fog" args={['#191920', 0, 15]} />
-      <Environment preset="city" />
+      {/* <fog attach="fog" args={['#FF0000', 0, 30]} /> */}
+      {/* <Environment preset="city" /> */}
+      {/* <pointLight intensity={1} position={[0, 10, 0]} castShadow/> */}
+      {/* <ambientLight intentsity={1}/> */}
+      <spotLight position={[0, 10, 0]} angle={0.4} penumbra={1} intensity={1} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0001} />
+      <perspectiveCamera />
       <group position={[0, -0.5, 0]}>
         <Frames images={images} />
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-          <planeGeometry args={[50, 50]} />
-          <MeshReflectorMaterial
-            blur={[300, 100]}
-            resolution={2048}
-            mixBlur={1}
-            mixStrength={60}
-            roughness={1}
-            depthScale={1.2}
-            minDepthThreshold={0.4}
-            maxDepthThreshold={1.4}
-            color="#151515"
-            metalness={0.5}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
+          <planeGeometry args={[50, 50, 1]} />
+          <meshPhysicalMaterial
+            // roughness={1}
+            metalness={1}
+            color="#5CFFD1"
           />
         </mesh>
       </group>
@@ -59,6 +57,7 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
   const clicked = useRef()
   const [, params] = useRoute('/item/:id')
   const [, setLocation] = useLocation()
+
   useEffect(() => {
     clicked.current = ref.current.getObjectByName(params?.id)
     if (clicked.current) {
@@ -72,9 +71,9 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
   })
   useFrame((state, dt) => {
     // damp 함수 안의 변수 변경 0, 1, 3 => 0, 1, 2
-    state.camera.position.lerp(p, THREE.MathUtils.damp(0, 1, 2, dt))
+    state.camera.position.lerp(p, THREE.MathUtils.damp(0, 1, 4, 0.016))
     // 0, 1, 3 => 1(중요), 1, 10
-    state.camera.quaternion.slerp(q, THREE.MathUtils.damp(1, 1, 10, dt))
+    state.camera.quaternion.slerp(q, THREE.MathUtils.damp(1, 1, 10, 0.016))
   })
   const handleClick = (e) => {
     e.stopPropagation();
@@ -85,12 +84,12 @@ function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() })
       ref={ref}
       onClick={(e) => handleClick(e)}
       onPointerMissed={() => setLocation('/')}>
-      {images.map((props) => <Frame key={props.url} {...props} /> /* prettier-ignore */)}
+      {images.map((props) => <Frame key={props.url} intro={props.intro} href={props.href} {...props} /> /* prettier-ignore */)}
     </group>
   )
 }
 
-function Frame({ url, c = new THREE.Color(), ...props }) {
+function Frame({ url, c = new THREE.Color(), intro, href, ...props }) {
   const [hovered, hover] = useState(false)
   const [rnd] = useState(() => Math.random())
   const image = useRef()
@@ -101,7 +100,7 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
     image.current.material.zoom = hovered ? 0.5 : 0.75 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 4
     image.current.scale.x = THREE.MathUtils.lerp(image.current.scale.x, 0.85 * (hovered ? 0.85 : 1), 0.1)
     image.current.scale.y = THREE.MathUtils.lerp(image.current.scale.y, 0.9 * (hovered ? 0.905 : 1), 0.1)
-    frame.current.material.color.lerp(c.set(hovered ? 'orange' : 'white').convertSRGBToLinear(), 0.1)
+    frame.current.material.color.lerp(c.set(hovered ? '#5CFFD1' : 'white').convertSRGBToLinear(), 0.1)
   })
   return (
     <group {...props}>
@@ -112,23 +111,58 @@ function Frame({ url, c = new THREE.Color(), ...props }) {
         scale={[GOLDENRATIO, 1, 0.05]}
         position={[0, GOLDENRATIO / 2, 0]}>
         <boxGeometry />
-        <meshStandardMaterial color="#151515" metalness={0.5} roughness={0.5} envMapIntensity={2} />
-        <mesh ref={frame} raycast={() => null} scale={[0.9, 0.93, 0.9]} position={[0, 0, 0.2]}>
+        <meshStandardMaterial color="#151515" metalness={0.5} roughness={0.5} envMapIntensity={2} castShadow/>
+        <mesh ref={frame} raycast={() => null} scale={[0.9, 0.93, 0.9]} position={[0, 0, 0.2]} castShadow>
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url} />
+        <Image alt={url} raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url} castShadow/>
       </mesh>
-      <Text maxWidth={0.1} anchorX="left" anchorY="top" position={[0.55, GOLDENRATIO, 0]} fontSize={0.025}>
-        {name.split('-').join(' ')}
+      <Text maxWidth={0.1} anchorX="left" anchorY="top" position={[0.25, 1.5, 0]} fontSize={0.1} onClick={() => document.location.href = href}>
+        {intro}
       </Text>
     </group>
   )
 }
 
+function Marker({ children, ...props }) {
+  // This holds the visible state
+  const [hidden, set] = useState()
+  return (
+    <Html
+      transform
+      occlude
+      // The <Html> component can tell us when something is occluded (or not)
+      onOcclude={set}
+      // We just interpolate the visible state into css opacity and transforms
+      style={{ transition: 'all 0.2s', opacity: hidden ? 0 : 1, transform: `scale(${hidden ? 0.25 : 1})`, color: '#FFFFFF' }}
+      {...props}>
+      {children}
+    </Html>
+  )
+}
+
 function Cloud({ momentsData, zoomToView }) {
   return momentsData.map(({ position, color }, i) => (
-    <mesh key={i} position={position} onClick={(e) => zoomToView(e.object.position)} rotation={position}>
+    <Tetrahedron key={i} position={position} color={color} index={i} zoomToView={zoomToView} />
+  ))
+}
+
+function Tetrahedron({ position, color, index, zoomToView }) {
+  const tetrahedronRef = useRef();
+  useFrame((state) => {
+    const time = state.clock.elapsedTime;
+    const positionX = tetrahedronRef.current.position.x;
+    const positionZ = tetrahedronRef.current.position.z;
+    const radius = Math.sqrt(positionX * positionX + positionZ * positionZ);
+    tetrahedronRef.current.position.x += 0.01 * Math.sin(time);
+    tetrahedronRef.current.position.z += Math.sqrt(radius * radius - (positionX + 0.01 * Math.sin(time)) * (positionX + 0.01 * Math.sin(time))) - positionZ;
+    tetrahedronRef.current.rotation.x += 0.03 * Math.sin(time * Math.random()) + 0.03;
+    tetrahedronRef.current.rotation.y += 0.03 * Math.sin(time * Math.random()) + 0.03;
+    tetrahedronRef.current.rotation.z += 0.03 * Math.sin(time * Math.random()) + 0.03;
+  })
+  return (
+    <mesh castShadow receiveShadow key={index} ref={tetrahedronRef} position={position} onClick={(e) => zoomToView(e.object.position)} rotation={position}>
       <tetrahedronGeometry
         attach="geometry"
         args={[0.02, 0]}
@@ -136,8 +170,9 @@ function Cloud({ momentsData, zoomToView }) {
           new THREE.Vector3(2, 0, -1).normalize(),
           Math.atan(Math.sqrt(2))
         )}
+        castShadow
       />
-      <meshStandardMaterial color={color} />
+      <meshStandardMaterial color={'#FFFFFF'} metalness={1} castShadow/>
     </mesh>
-  ))
+  )
 }
