@@ -11,6 +11,7 @@ body {
   color: #606063;
   overflow: hidden;
   font-family: "News Cycle", sans-serif;
+  scroll-snap-type: y mandatory;
 }
 
 #root {
@@ -34,5 +35,18 @@ canvas {
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: auto;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.container {
+  height: 100vh;
+}
+
+.section {
+  scroll-snap-align: start;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -4,7 +4,6 @@ import Frames from './Frames';
 import Stars from './Stars';
 import Planet from './Planet';
 
-
 const randomPos = (min = 4, max = -4) => Math.random() * (max - min) + min
 
 const images = [
