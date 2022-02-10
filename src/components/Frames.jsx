@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useCursor, Image, Text } from '@react-three/drei';
 import { useRoute, useLocation } from 'wouter';
@@ -26,9 +26,9 @@ export default function Frames({ images, q = new THREE.Quaternion(), p = new THR
     }
   })
   useFrame(() => {
-    if (state.top) {
-      console.log(state.top.current);
-      p.set(0, 0, - state.top.current / 1000 + 8.5);
+    if (state.scroll) {
+      console.log(state.scroll.current);
+      p.set(0, 0, - state.scroll.current / 1000 + 8.5);
     }
   })
   useFrame((state, dt) => {

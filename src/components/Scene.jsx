@@ -5,7 +5,7 @@ export default function App() {
   const scrollArea = useRef(null);
   const onScroll = () => {
     if (scrollArea.current) {
-      state.top.current = scrollArea.current.scrollTop;
+      state.scroll.current = scrollArea.current.scrollTop;
     }
   }
   return (
@@ -18,6 +18,9 @@ export default function App() {
       </section>
       <section className='section'>
         3
+      </section>
+      <section className='section'>
+        4
       </section>
     </div>
   );
