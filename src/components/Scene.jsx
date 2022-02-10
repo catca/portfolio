@@ -1,11 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import state from "../lib/store";
 
-export default function App() {
+export default function Scene() {
   const scrollArea = useRef(null);
+  useEffect(() => {
+    state.page.current = 1;
+  }, [])
   const onScroll = () => {
     if (scrollArea.current) {
       state.scroll.current = scrollArea.current.scrollTop;
+      if (Math.abs((scrollArea.current.scrollTop / window.innerHeight) - Math.round(scrollArea.current.scrollTop / window.innerHeight)) < 0.1) {
+        state.page.current = Math.round(scrollArea.current.scrollTop / window.innerHeight) + 1;
+      } 
     }
   }
   return (

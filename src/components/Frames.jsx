@@ -27,7 +27,6 @@ export default function Frames({ images, q = new THREE.Quaternion(), p = new THR
   })
   useFrame(() => {
     if (state.scroll) {
-      console.log(state.scroll.current);
       p.set(0, 0, - state.scroll.current / 1000 + 8.5);
     }
   })
