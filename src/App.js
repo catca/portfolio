@@ -1,4 +1,5 @@
-import Gallery from "./threejs/Gallery";
+import Gallery from "./components/Gallery";
+import './App.css';
 
 export default function App() {
   return (
