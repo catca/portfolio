@@ -1,17 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
 import Gallery from "../components/Gallery";
 import Scene from "../components/Scene";
 
 export default function App() {
-  useEffect(() => {
-    
-  }, [])
+  const [currentPage, setCurrentPage] = useState<number>(0);
   return (
     <>
-      <Header />
+      <Header setCurrentPage={setCurrentPage}/>
       <Gallery />
-      <Scene />
+      <Scene currentPage={currentPage}/>
     </> 
   );
 }

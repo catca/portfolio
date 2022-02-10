@@ -1,11 +1,16 @@
 import React, { useRef, useEffect } from "react";
 import state from "../lib/store";
 
-export default function Scene() {
+export default function Scene({currentPage}) {
   const scrollArea = useRef(null);
   useEffect(() => {
     state.page.current = 1;
   }, [])
+  
+  useEffect(() => {
+    document.getElementById('scrollArea').scrollTo({ top: (currentPage - 1) * window.innerHeight, left: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
   const onScroll = () => {
     if (scrollArea.current) {
       state.scroll.current = scrollArea.current.scrollTop;
@@ -14,8 +19,9 @@ export default function Scene() {
       } 
     }
   }
+
   return (
-    <div className="scrollArea" ref={scrollArea} onScroll={onScroll} style={{ color: '#FFFFFF' }}>
+    <div className="scrollArea" id="scrollArea" ref={scrollArea} onScroll={onScroll} style={{ color: '#FFFFFF' }}>
       <section className='section'>
         안녕하세요 저는 저입니다. 저를 보고 너무 기쁘셨죠? 어쩌라구요 저쩔티비!! 안녕하지못해요 저는요 저도요
       </section>
