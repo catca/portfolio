@@ -1,22 +1,30 @@
 import React, { useRef, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { initMove, selectPage, scrollCurrentPage } from '../lib/redux/page/pageSlice';
 import state from "../lib/store";
 
-export default function Scene({currentPage}) {
+export default function Scene() {
   const scrollArea = useRef(null);
-  useEffect(() => {
-    state.page.current = 1;
-  }, [])
-  
+  const { currentPage, move } = useSelector(selectPage);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     document.getElementById('scrollArea').scrollTo({ top: (currentPage - 1) * window.innerHeight, left: 0, behavior: 'smooth' });
   }, [currentPage]);
 
   const onScroll = () => {
     if (scrollArea.current) {
+      const tempPage = scrollArea.current.scrollTop / window.innerHeight;
       state.scroll.current = scrollArea.current.scrollTop;
-      if (Math.abs((scrollArea.current.scrollTop / window.innerHeight) - Math.round(scrollArea.current.scrollTop / window.innerHeight)) < 0.1) {
-        state.page.current = Math.round(scrollArea.current.scrollTop / window.innerHeight) + 1;
-      } 
+      if (Math.abs(tempPage - Math.round(tempPage)) < 0.1) {
+        if (move) {
+          if (Math.round(tempPage) + 1 === currentPage) {
+            dispatch(initMove());
+          }
+        } else {
+          dispatch(scrollCurrentPage(Math.round(tempPage) + 1));
+        }
+      }
     }
   }
 

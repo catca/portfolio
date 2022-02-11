@@ -16,9 +16,6 @@ export default function Planet() {
       planetRef.current.position.x = Math.cos(time * speed) * radius;
       planetRef.current.position.y = -Math.cos(time * speed) * radius;
       planetRef.current.position.z = Math.sin(time * speed) * radius + 2;
-      planetRef.current.rotation.x += 0.03 * Math.sin(time * Math.random()) + 0.03;
-      planetRef.current.rotation.y += 0.03 * Math.sin(time * Math.random()) + 0.03;
-      planetRef.current.rotation.z += 0.03 * Math.sin(time * Math.random()) + 0.03;
     }
   })
   return (
@@ -27,9 +24,9 @@ export default function Planet() {
       <meshPhysicalMaterial
         roughness={1}
         metalness={1}
-        color="#0000FF"
+        color="#FFFFFF"
       />
-      <spotLight position={[0, 0, 1]} intensity={1}/>
+      <spotLight position={[0, 0, 1]} intensity={1} />
     </mesh>
   )
 }

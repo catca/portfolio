@@ -18,18 +18,14 @@ export default function Frames({ images, q = new THREE.Quaternion(), p = new THR
     clicked.current = ref.current.getObjectByName(params?.id);
     if (clicked.current) {
       clicked.current.parent.updateWorldMatrix(true, true);
-      clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, 1.25));
+      clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, -0.5));
       clicked.current.parent.getWorldQuaternion(q);
     } else {
       p.set(0, 0, 5.5);
       q.identity();
     }
   })
-  useFrame(() => {
-    if (state.scroll) {
-      p.set(0, 0, - state.scroll.current / 1000 + 8.5);
-    }
-  })
+
   useFrame((state, dt) => {
     // damp 함수 안의 변수 변경 0, 1, 3 => 0, 1, 2
     state.camera.position.lerp(p, THREE.MathUtils.damp(0, 1, 4, 0.016));
@@ -82,7 +78,7 @@ function Frame({ url, c = new THREE.Color(), intro, href, clicked, ...props }) {
           <boxGeometry />
           <meshBasicMaterial toneMapped={false} fog={false} />
         </mesh>
-        <Image alt={url} raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url}/>
+        <Image alt={url} raycast={() => null} ref={image} position={[0, 0, 0.7]} url={url} />
       </mesh>
       <Text maxWidth={0.1} anchorX="left" anchorY="top" position={[0.25, 1.5, 0]} fontSize={0.1} onClick={() => document.location.href = href}>
         {intro}
