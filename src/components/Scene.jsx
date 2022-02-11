@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initMove, selectPage, scrollCurrentPage } from '../lib/redux/page/pageSlice';
 import state from "../lib/store";
 
-export default function Scene() {
+const Scene = ({ setScroll }) => {
   const scrollArea = useRef(null);
   const { currentPage, move } = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -23,9 +23,17 @@ export default function Scene() {
           }
         } else {
           dispatch(scrollCurrentPage(Math.round(tempPage) + 1));
+          if (currentPage !== 3) {
+            // setScroll(false);
+          } 
         }
       }
     }
+  }
+
+  const onClick = () => {
+    setScroll(false);
+    window.addEventListener("wheel", (e) => { e.stopPropagation(); setScroll(true) });
   }
 
   return (
@@ -37,7 +45,7 @@ export default function Scene() {
         2
       </section>
       <section className='section'>
-        3
+        <div onClick={onClick} style={{cursor: 'pointer'}}>저를 눌러주세요</div>
       </section>
       <section className='section'>
         4
@@ -45,3 +53,5 @@ export default function Scene() {
     </div>
   );
 }
+
+export default React.memo(Scene);

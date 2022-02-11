@@ -4,11 +4,11 @@ import { useFrame } from '@react-three/fiber';
 import { useCursor, Image, Text } from '@react-three/drei';
 import { useRoute, useLocation } from 'wouter';
 import getUuid from 'uuid-by-string';
-import state from "../lib/store";
+
 
 const GOLDENRATIO = 1.61803398875;
 
-export default function Frames({ images, q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
+export default function Frames({ images, setScroll, q = new THREE.Quaternion(), p = new THREE.Vector3() }) {
   const ref = useRef();
   const clicked = useRef();
   const [, params] = useRoute('/item/:id');
@@ -25,6 +25,14 @@ export default function Frames({ images, q = new THREE.Quaternion(), p = new THR
       q.identity();
     }
   })
+  useEffect(() => {
+    const listener = () => {
+      setScroll(true);
+    }
+    return () => {
+      window.removeEventListener("wheel", listener);
+    };
+  });
 
   useFrame((state, dt) => {
     // damp 함수 안의 변수 변경 0, 1, 3 => 0, 1, 2

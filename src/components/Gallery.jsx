@@ -18,13 +18,13 @@ const images = [
   { position: [2.2, 0, 2.2], rotation: [0, -Math.PI / 7, 0], url: '/img/gallery/bunnymarket.PNG', intro: 'bunnymarket', href: 'http://bunnymarket.o-r.kr:3000' },
 ]
 
-export default function Gallery() {
+const Gallery = ({scroll, setScroll}) => {
   const momentsArray = useMemo(() => Array.from({ length: 300 }, () => ({ position: [randomPos(), randomPos(), randomPos() + 2], speed: Math.random() * 0.5 + 0.25 })), []);
   const { currentPage } = useSelector(selectPage);
 
   return (
     <Suspense fallback={null}>
-      <Canvas shadows >
+      <Canvas shadows style={{ zIndex: `${scroll ? 0 : (currentPage === 3 ? 10 : 0)}` }} >
         <directionalLight color={'#5CFFD1'} position={[0, 10, 0]} intentsity={1} castShadow />
         <color attach="background" args={['#191920']} />
         <pointLight intensity={1} position={[0, 10, 0]} castShadow decay={0} />
@@ -32,7 +32,7 @@ export default function Gallery() {
         <spotLight position={[0, 15, 2]} angle={0.4} penumbra={1} intensity={1} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0001} />
         {currentPage === 3 &&
           <group position={[0, -0.5, 0]}>
-            <Frames images={images} />
+            <Frames images={images} setScroll={setScroll} />
           </group>
         }
         <Planet />
@@ -41,3 +41,5 @@ export default function Gallery() {
     </Suspense>
   )
 };
+
+export default React.memo(Gallery);

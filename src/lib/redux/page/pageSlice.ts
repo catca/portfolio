@@ -4,11 +4,13 @@ import { RootState } from '../store';
 interface NewPageSliceProps {
   currentPage: number;
   move: boolean;
+  scroll: boolean;
 }
 
 const initialState: NewPageSliceProps = {
   currentPage: 1,
   move: false,
+  scroll: false,
 };
 
 export const newPageSlice = createSlice({
@@ -24,6 +26,12 @@ export const newPageSlice = createSlice({
     },
     INIT_MOVE: (state) => {
       state.move = false;
+    },
+    ON_SCROLL: (state) => {
+      state.scroll = true;
+    },
+    OFF_SCROLL: (state) => {
+      state.scroll = false;
     },
   },
 });
@@ -46,7 +54,19 @@ export const scrollCurrentPage = (state: number) => {
   };
 };
 
-export const { SCROLL_CORRENT_PAGE, SET_CURRENT_PAGE, INIT_MOVE } = newPageSlice.actions;
+export const onScroll = () => {
+  return async (dispatch: any) => {
+    dispatch(ON_SCROLL());
+  };
+};
+
+export const offScroll = () => {
+  return async (dispatch: any) => {
+    dispatch(OFF_SCROLL());
+  };
+};
+
+export const { SCROLL_CORRENT_PAGE, SET_CURRENT_PAGE, INIT_MOVE, ON_SCROLL, OFF_SCROLL } = newPageSlice.actions;
 export const selectPage = (state: RootState) => state.page;
 
 export default newPageSlice.reducer;
