@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import Frames from './Frames';
 import Stars from './Stars';
 import Planet from './Planet';
+import state from '../../lib/store';
 
 import { useSelector } from 'react-redux';
 import { selectPage } from '../../lib/redux/page/pageSlice';
@@ -17,7 +18,7 @@ const Gallery = ({ scroll, setScroll }: { scroll: boolean, setScroll: (value: bo
     <Suspense fallback={null}>
       <Canvas shadows style={{ zIndex: `${scroll ? 0 : (currentPage === 3 ? 10 : 0)}` }} >
         <directionalLight color={'#5CFFD1'} position={[0, 10, 0]} castShadow />
-        <color attach="background" args={['#191920']} />
+        <color attach="background" args={[`#${currentPage * 2 + 10}${currentPage * 2 + 10}${currentPage * 2 + 10}`]} />
         <pointLight intensity={1} position={[0, 10, 0]} castShadow decay={0} />
         <ambientLight />
         <spotLight position={[0, 15, 2]} angle={0.4} penumbra={1} intensity={1} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0001} />
