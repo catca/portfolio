@@ -5,7 +5,7 @@ import Stars from './Stars';
 import Planet from './Planet';
 
 import { useSelector } from 'react-redux';
-import { selectPage } from '../lib/redux/page/pageSlice';
+import { selectPage } from '../../lib/redux/page/pageSlice';
 
 const randomPos = (min = 5, max = -5) => Math.random() * (max - min) + min;
 

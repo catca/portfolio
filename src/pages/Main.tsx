@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/common/Header";
-import Gallery from "../components/Gallery";
-import Scene from "../components/Scene";
+import Gallery from "../components/three/Gallery";
+import Scene from "../components/pages/Scene";
 
 export default function App() {
   const [scroll, setScroll] = useState(false);
-  useEffect(() => {
-    console.log(scroll);
-  }, [scroll])
   return (
     <>
       <Header />

@@ -1,9 +1,7 @@
 import * as THREE from 'three';
 import React, { useEffect, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import state from "../lib/store";
-import { useSelector } from 'react-redux';
-import { selectPage } from '../lib/redux/page/pageSlice';
+import state from "../../lib/store";
 
 export default function Stars({ momentsData, currentPage, p = new THREE.Vector3(), q = new THREE.Quaternion() }) {
   useFrame(() => {
