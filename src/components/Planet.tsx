@@ -1,21 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
+import * as Three from 'three';
 
 export default function Planet() {
-  const planetRef = useRef();
+  const planetRef = useRef<Three.Mesh>();
   const [radius, setRadius] = useState(0);
   useEffect(() => {
-    const x = planetRef.current.position.x;
-    const z = planetRef.current.position.z;
+    const x = planetRef.current!.position.x;
+    const z = planetRef.current!.position.z;
     setRadius(Math.sqrt(x * x + (z - 2) * (z - 2)));
   }, [])
   useFrame((state) => {
     if (radius) {
       const time = state.clock.elapsedTime;
       const speed = 1.4;
-      planetRef.current.position.x = Math.cos(time * speed) * radius;
-      planetRef.current.position.y = -Math.cos(time * speed) * radius;
-      planetRef.current.position.z = Math.sin(time * speed) * radius + 2;
+      planetRef.current!.position.x = Math.cos(time * speed) * radius;
+      planetRef.current!.position.y = -Math.cos(time * speed) * radius;
+      planetRef.current!.position.z = Math.sin(time * speed) * radius + 2;
     }
   })
   return (

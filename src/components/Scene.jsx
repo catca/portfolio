@@ -23,9 +23,9 @@ const Scene = ({ setScroll }) => {
           }
         } else {
           dispatch(scrollCurrentPage(Math.round(tempPage) + 1));
-          if (currentPage !== 3) {
-            // setScroll(false);
-          } 
+          // if (currentPage !== 3) {
+          //   setScroll(false);
+          // } 
         }
       }
     }
@@ -33,13 +33,13 @@ const Scene = ({ setScroll }) => {
 
   const onClick = () => {
     setScroll(false);
-    window.addEventListener("wheel", (e) => { e.stopPropagation(); setScroll(true) });
+    window.addEventListener("wheel", (e) => setScroll(true));
   }
 
   return (
     <div className="scrollArea" id="scrollArea" ref={scrollArea} onScroll={onScroll} style={{ color: '#FFFFFF' }}>
       <section className='section'>
-        안녕하세요 저는 저입니다. 저를 보고 너무 기쁘셨죠? 어쩌라구요 저쩔티비!! 안녕하지못해요 저는요 저도요
+        안녕하세요 저는 저입니다. 저를 보고 너무 기쁘셨죠? 어쩌라구요 저쩔티비!! 안녕하지못해요 저는요 저도요 저를 뽑아주세요 안 뽑으면 니 머리를 뽑아버릴거에요
       </section>
       <section className='section'>
         2
