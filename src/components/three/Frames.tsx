@@ -5,7 +5,6 @@ import { useCursor, Image, Text, Html } from '@react-three/drei';
 import getUuid from 'uuid-by-string';
 import { Object3D, Group, Mesh } from 'three';
 import styled from '@emotion/styled';
-import { assertJSXExpressionContainer } from '@babel/types';
 
 const GOLDENRATIO = 1.61803398875;
 const images = [
@@ -76,10 +75,7 @@ export default function Frames({ setScroll, q = new THREE.Quaternion(), p = new 
       clicked.current.parent.getWorldQuaternion(q);
     } 
   })
-  useEffect(() => {
-    console.log(objectName);
-    clicked.current = ref.current!.getObjectByName(objectName);
-  }, [objectName])
+  
   useEffect(() => {
     const listener = () => {
       setScroll(true);
@@ -100,6 +96,7 @@ export default function Frames({ setScroll, q = new THREE.Quaternion(), p = new 
     setObjectName('');
     clicked.current = undefined;
   }
+
   return (
     <group
       ref={ref}
@@ -123,9 +120,6 @@ function Frame({ url, c = new THREE.Color(), textPosition, intro, href, explanat
     image.current.scale.y = THREE.MathUtils.lerp(image.current.scale.y, 0.9 * (hovered ? 0.905 : 1), 0.1);
     frame.current!.material.color.lerp(c.set(hovered ? '#C0C0C0' : 'white').convertSRGBToLinear(), 0.1);
   })
-  useEffect(() => {
-    console.log(clicked.current, object, objectName);
-  }, [object])
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
@@ -159,7 +153,7 @@ function Frame({ url, c = new THREE.Color(), textPosition, intro, href, explanat
       <Text maxWidth={0.1} anchorX="left" anchorY="top" position={[0.25, 1.5, 0]} fontSize={0.1} onClick={onClickLink}>
         {intro}
       </Text>
-      {object.name === objectName &&
+      {object?.name === objectName &&
         <Html position={textPosition}>
           <Container>
             <Explanation>

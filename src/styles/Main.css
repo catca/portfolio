@@ -1,0 +1,15 @@
+.container {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 14;
+  clip-path: url(#myClip);
+}
+.svgWrapper {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
