@@ -1,0 +1,51 @@
+.container {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 14;
+  mask-image: url(./cat.svg);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 1000%;
+  animation: clip-fade 10s ease-in-out;
+}
+
+@keyframes clip-fade {
+  0% {
+    -webkit-mask-position: center;
+    mask-size: 10%;
+  }
+  30% {
+    -webkit-mask-position: center;
+    mask-size: 10%;
+  }
+  100% {
+    -webkit-mask-position: center;
+    mask-size: 1000%;
+  }
+}
+/* .svgWrapper {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cls-1 {
+  fill: transparent;
+}
+.cls-2 {
+  fill: url(#무제_그라디언트_12);
+} */
+/* .container {
+  -webkit-mask-image: linear-gradient(to right, transparent, #fff, transparent);
+  -webkit-mask-size: 300% 100%;
+  mask-image: linear-gradient(to right, transparent, #fff, transparent);
+  mask-size: 300% 100%;
+  animation: clip-fade 3s infinite alternate;
+}
+
+img {
+  max-width: 100%;
+} */
