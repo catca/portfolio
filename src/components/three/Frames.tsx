@@ -154,7 +154,7 @@ function Frame({ url, c = new THREE.Color(), textPosition, intro, href, explanat
         {intro}
       </Text>
       {object?.name === objectName &&
-        <Html position={textPosition}>
+        <Html center>
           <Container>
             <Explanation>
               {explanation.split('\n').map((line) => {
@@ -184,7 +184,7 @@ const Container = styled.div`
   width: 550px;
   color: #000000;
   background-color: #FFFFFF;
-  padding: 20px;
+  padding: 4px 20px;
   background-image: -webkit-repeating-linear-gradient(bottom, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%, .1) 7.5%),
     -webkit-repeating-linear-gradient(bottom, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   4%, hsla(0,0%,  0%,.03) 4.5%),
     -webkit-repeating-linear-gradient(bottom, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%),

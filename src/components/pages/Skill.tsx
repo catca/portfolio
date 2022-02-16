@@ -8,7 +8,7 @@ const Skill = () => {
         
       </H1>
       <Title>
-        
+        react, typescript, redux-toolkit, javascript, python, mongodb, nodejs, next, getsby
       </Title>
     </Conatiner>
   );
