@@ -10,11 +10,11 @@ export default function App() {
   const [count, setCount] = useState<number>(0);
   return (
     <div>
-      <Loading count={count} setCount={setCount}/>
-      <Mask count={count}>
+      <Mask>
+        <Loading count={count} setCount={setCount} />
         <Header />
-        <Gallery scroll={scroll} setScroll={setScroll}/>
-        <Scene setScroll={setScroll}/>
+        <Gallery scroll={scroll} setScroll={setScroll} />
+        <Scene setScroll={setScroll} />
       </Mask>
     </div>
   );
