@@ -4,6 +4,7 @@ import Loading from "../components/common/Loading";
 import Header from "../components/common/Header";
 import Gallery from "../components/three/Gallery";
 import Scene from "../components/pages/Scene";
+import { AnimatedCursor } from "../components/common/AnimatedCursor";
 
 export default function App() {
   const [scroll, setScroll] = useState<boolean>(false);
@@ -11,6 +12,7 @@ export default function App() {
   return (
     <div>
       <Mask>
+        <AnimatedCursor />
         <Loading count={count} setCount={setCount} />
         <Header />
         <Gallery scroll={scroll} setScroll={setScroll} />

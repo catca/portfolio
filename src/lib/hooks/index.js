@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-export default function useInterval(callback, delay) {
+export function useInterval(callback, delay) {
   const savedCallback = useRef();
 
   useEffect(() => {
@@ -17,4 +17,25 @@ export default function useInterval(callback, delay) {
       return () => clearInterval(id);
     }
   }, [delay]);
+}
+
+export function useEventListener(eventName, handler, element = document) {
+  const savedHandler = useRef()
+
+  useEffect(() => {
+    savedHandler.current = handler
+  }, [handler])
+
+  useEffect(() => {
+    const isSupported = element && element.addEventListener
+    if (!isSupported) return
+
+    const eventListener = (event) => savedHandler.current(event)
+
+    element.addEventListener(eventName, eventListener)
+
+    return () => {
+      element.removeEventListener(eventName, eventListener)
+    }
+  }, [eventName, element])
 }

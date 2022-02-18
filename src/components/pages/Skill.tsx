@@ -40,27 +40,3 @@ const Title = styled.div`
   font-weight: 600;
   color: #00b841;
 `;
-
-const linePlay = keyframes`
-  0% {
-    stroke-dashoffset: 800;
-  }
-  10% {
-    stroke-dashoffset: 0;
-  }
-  70% {
-    stroke-dashoffset: 0;
-  }
-  90% {
-    stroke-dashoffset: -800;  
-  }
-  100% {
-    stroke-dashoffset: -800;
-  }
-`
-
-const toolLine = css`
-stroke-dasharray: 800;
-stroke-dashoffset: 800;
-animation: ${linePlay} 6s ease-out infinite forwards;
-`;

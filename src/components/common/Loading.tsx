@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import '../../styles/Loading.css';
-import useInterval from "../../lib/hooks";
+import { useInterval } from "../../lib/hooks";
 import styled from "@emotion/styled";
 
 const Loading = ({ count, setCount }: { count: number, setCount: Dispatch<SetStateAction<number>> }) => {
@@ -14,7 +14,7 @@ const Loading = ({ count, setCount }: { count: number, setCount: Dispatch<SetSta
         <Container>
           <div className="background"></div>
           <svg className="loading" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="270px" height="380px" viewBox="0 0 190 190" enable-background="new 0 0 190 190" xmlSpace="preserve">
+            width="270px" height="380px" viewBox="0 0 190 190" enableBackground="new 0 0 190 190" xmlSpace="preserve">
             <defs>
               <pattern id="water" width=".25" height="1.1" patternContentUnits="objectBoundingBox">
                 <path fill="#000" d="M0.25,1H0c0,0,0-0.659,0-0.916c0.083-0.303,0.158,0.334,0.25,0C0.25,0.327,0.25,1,0.25,1z" />
