@@ -7,7 +7,7 @@ import Introduce from "./Introduce";
 import Project from "./Project";
 import Skill from "./Skill";
 
-const Scene = ({ setScroll }) => {
+const Scene = ({ setScroll, count }) => {
   const scrollArea = useRef(null);
   const { currentPage, move } = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Scene = ({ setScroll }) => {
   return (
     <div className="scrollArea" id="scrollArea" ref={scrollArea} onScroll={onScroll} style={{ color: '#FFFFFF' }}>
       <section className='section'>
-        <Introduce /> 
+        <Introduce count={count}/>
       </section>
       <section className='section'>
         <Skill />
