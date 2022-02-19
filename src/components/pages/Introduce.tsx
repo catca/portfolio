@@ -1,5 +1,5 @@
 /* eslint-disable no-extend-native */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from '@emotion/styled';
 import TypingText from "../common/TypingText";
 

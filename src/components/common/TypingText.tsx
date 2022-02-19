@@ -109,6 +109,8 @@ const Span = styled.span`
 `;
 
 const Container = styled.div`
+  width: 714px;
   display: flex;
+  justify-content: start;
   align-items: center;
 `;

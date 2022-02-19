@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './lib/redux/store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import "./fonts/font.css";
 
 let persistor = persistStore(store);
 
