@@ -3,7 +3,7 @@ import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ThreeEvent, useFrame } from '@react-three/fiber';
 import { useCursor, Image, Text, Html } from '@react-three/drei';
 import getUuid from 'uuid-by-string';
-import { Object3D, Group, Mesh } from 'three';
+import { Group } from 'three';
 import styled from '@emotion/styled';
 
 const GOLDENRATIO = 1.61803398875;
@@ -11,31 +11,37 @@ const images = [
   // Front
   {
     position: [0, 0, 2],
-    textPosition: [-0.92, 0.2, 0],
     rotation: [0, 0, 0],
     url: '/img/gallery/portfolio.PNG',
     intro: 'portfolio',
     href: 'http://localhost:3000',
-    explanation: ` react, typescript를 기반으로 제작한 포트폴리오.\nthree.js를 사용하여 우주에 있는 듯한 느낌을 연출하였다.`
+    git: '',
+    notion: '',
+    img: '',
+    explanation: ` react, typescript를 기반으로 제작한 포트폴리오.\nthree.js를 사용하여 우주에 있는 듯한 느낌을 연출하였습니다.\nsvg를 활용하여 여러 가지 애니메이션을 주었습니다.`
   },
   // Left
   {
     position: [-2.2, 0, 2.2],
-    textPosition: [-1, 0.2, 0],
     rotation: [0, Math.PI / 7, 0],
     url: '/img/gallery/shiningstargram.PNG',
     intro: 'shiningstargram',
     href: 'https://shiningstargram.vercel.app',
+    git: 'https://github.com/intsa-fullstack/shiningstar',
+    notion: '',
+    img: '/img/stargram.png',
     explanation: ' react, next, typescript를 기반으로 제작한 SNS 웹사이트 입니다.'
   },
   // Right
   {
     position: [2.2, 0, 2.2],
-    textPosition: [-1, 0.2, 0],
     rotation: [0, -Math.PI / 7, 0],
     url: '/img/gallery/bunnymarket.PNG',
     intro: 'bunnymarket',
     href: 'http://bunnymarket.o-r.kr:3000',
+    git: 'https://github.com/catca/bunnyMarket',
+    notion: '',
+    img: '/img/bunnymarket.jpg',
     explanation: ' react를 기반으로 제작한 중고마켓 플랫폼 입니다.\njavascript, spring으로 만든 졸업작품을 react로 리팩토링한 웹사이트 입니다.'
   },
 ]
@@ -49,10 +55,12 @@ interface Frameprops {
   url: string,
   intro: string,
   href: string,
+  git: string,
+  notion: string,
+  img: string,
   clicked: MutableRefObject<any>,
   c?: THREE.Color,
   explanation: string,
-  textPosition: any,
   objectName: string,
   setObjectName: (value: string) => void,
 }
@@ -73,9 +81,9 @@ export default function Frames({ setScroll, q = new THREE.Quaternion(), p = new 
       clicked.current.parent.updateWorldMatrix(true, true);
       clicked.current.parent.localToWorld(p.set(0, GOLDENRATIO / 2, -0.5));
       clicked.current.parent.getWorldQuaternion(q);
-    } 
+    }
   })
-  
+
   useEffect(() => {
     const listener = () => {
       setScroll(true);
@@ -101,12 +109,12 @@ export default function Frames({ setScroll, q = new THREE.Quaternion(), p = new 
     <group
       ref={ref}
       onPointerMissed={onPointerMissed}>
-      {images.map((props) => <Frame key={props.url} clicked={clicked} setObjectName={setObjectName} objectName={objectName} {...props}/> /* prettier-ignore */)}
+      {images.map((props) => <Frame key={props.url} clicked={clicked} setObjectName={setObjectName} objectName={objectName} {...props} /> /* prettier-ignore */)}
     </group>
   )
 }
 
-function Frame({ url, c = new THREE.Color(), textPosition, intro, href, explanation, clicked, setObjectName, objectName, ...props }: Frameprops) {
+function Frame({ url, c = new THREE.Color(), intro, href, git, notion, img, explanation, clicked, setObjectName, objectName, ...props }: Frameprops) {
   const [hovered, hover] = useState(false);
   const [object, setObject] = useState<any>();
   const [rnd] = useState(() => Math.random());
@@ -130,6 +138,12 @@ function Frame({ url, c = new THREE.Color(), textPosition, intro, href, explanat
       setObjectName(e.object.name);
     }
   }
+  const onClickGit = () => {
+    document.location.href = git;
+  }
+  const onClickNotion = () => {
+    document.location.href = notion;
+  }
   const onClickLink = () => {
     document.location.href = href;
   }
@@ -138,7 +152,7 @@ function Frame({ url, c = new THREE.Color(), textPosition, intro, href, explanat
       <mesh
         name={name}
         onClick={(e) => handleClick(e)}
-        onPointerOver={() => hover(true) }
+        onPointerOver={() => hover(true)}
         onPointerOut={() => hover(false)}
         scale={[GOLDENRATIO, 1, 0.05]}
         position={[0, GOLDENRATIO / 2, 0]}>
@@ -163,13 +177,16 @@ function Frame({ url, c = new THREE.Color(), textPosition, intro, href, explanat
                     {line}
                     <br />
                   </span>
-                )})
+                )
+              })
               }
             </Explanation>
             <SeeMore>
-              <span onClick={onClickLink}>
-                더보기
-              </span>
+              <img src={'img/github.png'} alt={'github'} onClick={onClickGit} />
+              <img src={'img/notion.png'} alt={'notion'} onClick={onClickNotion} />
+              {
+                img !== '' && <img src={img} alt={intro} onClick={onClickLink} />
+              }
             </SeeMore>
           </Container>
         </Html>
@@ -182,19 +199,15 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 550px;
-  color: #000000;
-  background-color: #FFFFFF;
+  color: #f9faff;
   padding: 4px 20px;
-  background-image: -webkit-repeating-linear-gradient(bottom, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%, .1) 7.5%),
-    -webkit-repeating-linear-gradient(bottom, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   4%, hsla(0,0%,  0%,.03) 4.5%),
-    -webkit-repeating-linear-gradient(bottom, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%),
-    
-    linear-gradient(180deg, hsl(0,0%,78%)  0%, 
-    hsl(0,0%,90%) 47%, 
-    hsl(0,0%,78%) 53%,
-    hsl(0,0%,70%)100%);
   border-radius: 10px;
-  border: 3px solid #000;
+  border: 3px solid #5cffd1;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(238, 237, 242, 0.34);
+  border-radius: 0.9em;
+  background-image: linear-gradient(128deg, rgba(0, 0, 0, 0.35), rgba(26, 34, 41, 0.5) 50%);
 `;
 
 const Explanation = styled.div`
@@ -202,8 +215,15 @@ const Explanation = styled.div`
 `;
 
 const SeeMore = styled.div`
-  & > span {
-    color: #666666;
+  margin-top: 4px;
+  & > img {
+    width: 32px;
     cursor: pointer;
+    background-color: #FFF;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+  & > img:last-of-type {
+    margin-right: 0px;
   }
 `;
