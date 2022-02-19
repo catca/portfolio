@@ -30,9 +30,9 @@ export const FrontStatus = () => {
           <text dx="0" dy="0" fontSize="22" fontWeight="400" transform="translate(204.779816 406.971481)" fill="#fff" strokeWidth="0"><tspan y="0" fontWeight="400" strokeWidth="0">Next</tspan></text>
           <text dx="0" dy="0" fontSize="22" fontWeight="400" transform="translate(27.728576 321.004981)" fill="#fff" strokeWidth="0"><tspan y="0" fontWeight="400" strokeWidth="0">Redux</tspan></text>
           <text dx="0" dy="0" fontSize="22" fontWeight="400" transform="translate(184.43132 30.953601)" fill="#fff" strokeWidth="0"><tspan y="0" fontWeight="400" strokeWidth="0">Html, Css,</tspan><tspan x="0" y="22" fontWeight="400" strokeWidth="0">Javascript</tspan></text>
-          <text dx="0" dy="0" fontSize="22" fontWeight="400" transform="translate(14.27388 134.748757)" fill="#fff" strokeWidth="0"><tspan y="0" fontWeight="400" strokeWidth="0">Threejs</tspan></text>
+          <text dx="0" dy="0" fontSize="22" fontWeight="400" transform="translate(14.27388 134.748757)" fill="#fff" strokeWidth="0"><tspan y="0" fontWeight="400" strokeWidth="0">Canvas</tspan></text>
         </g>
-        <path className={toolLine} d="M228.570002,92.000001l110.854998,64v128l-110.854998,64-110.855002-64l83.140001-80l27.715001-112Z" fill="none" stroke="#00b841" strokeWidth="2.28" />
+        <path className={toolLine} d="M228.570002,77.702089L339.425,156.000001L350.949137,290L228.569999,329.246139l-123.896976-39.24614L145.427501,172l83.142501-94.297911Z" fill="none" stroke="#5CFFD1" strokeWidth="2.28" />
       </g>
     </svg>
   );
@@ -68,7 +68,7 @@ export const LibraryNBackStatus = () => {
           <text dx="0" dy="0" fontSize="22" fontWeight="400" transform="translate(194.43132 45.953601)" fill="#fff" strokeWidth="0"><tspan y="0" fontWeight="400" strokeWidth="0">Nodejs</tspan></text>
           <text dx="0" dy="0" fontSize="22" fontWeight="400" transform="translate(14.27388 134.748757)" fill="#fff" strokeWidth="0"><tspan y="0" fontWeight="400" strokeWidth="0">Graphql</tspan></text>
         </g>
-        <path className={toolLine} d="M228.570002,92.000001l110.854998,64v128l-110.854998,64-110.855002-64l83.140001-80l27.715001-112Z" fill="none" stroke="#00b841" strokeWidth="2.28" />
+        <path className={toolLine} d="M228.570002,92.000001l110.854998,64v128l-110.854998,64-110.855002-64l83.140001-80l27.715001-112Z" fill="none" stroke="#78d7ff" strokeWidth="2.28" />
       </g>
     </svg>
   );

@@ -1,7 +1,5 @@
 import React from "react";
 import styled from '@emotion/styled';
-import { keyframes } from "@emotion/react";
-import { css } from "@emotion/css";
 import { FrontStatus, LibraryNBackStatus } from "../svg/Status";
 
 const Skill = () => {
@@ -11,10 +9,10 @@ const Skill = () => {
         <Title>Front skill</Title>
         <FrontStatus />
       </div>
-      <div>
+      {/* <div>
         <Title>library & Back skill</Title>
         <LibraryNBackStatus />
-      </div>
+      </div> */}
     </Conatiner>
   );
 }
@@ -28,7 +26,10 @@ const Conatiner = styled.div`
   width: 100%;
   height: 100%;
   & > div:first-of-type {
-    margin-right: 36px;
+    // margin-right: 36px;
+    & > div {
+      color: #5CFFD1;
+    }
   }
 `;
 
@@ -38,5 +39,5 @@ const Title = styled.div`
   align-items: center;
   font-size: 32px;
   font-weight: 600;
-  color: #00b841;
+  color: #78d7ff;
 `;
