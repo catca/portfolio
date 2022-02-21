@@ -16,7 +16,7 @@ const Gallery = ({ scroll, setScroll }: { scroll: boolean, setScroll: (value: bo
 
   return (
     <Suspense fallback={null}>
-      <Canvas shadows style={{ zIndex: `${scroll ? 0 : (currentPage === 3 ? 10 : 0)}` }} >
+      <Canvas shadows style={{ zIndex: `${scroll ? -1 : (currentPage === 3 ? 10 : -1)}` }} >
         <directionalLight color={'#5CFFD1'} position={[0, 10, 0]} castShadow />
         <color attach="background" args={[`#${currentPage * 2 + 10}${currentPage * 2 + 10}${currentPage * 2 + 10}`]} />
         <pointLight intensity={1} position={[0, 10, 0]} castShadow decay={0} />

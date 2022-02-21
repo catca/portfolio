@@ -15,8 +15,8 @@ export default function App() {
         <AnimatedCursor />
         <Loading count={count} setCount={setCount} />
         <Header />
-        <Gallery scroll={scroll} setScroll={setScroll} />
         <Scene count={count} setScroll={setScroll} />
+        <Gallery scroll={scroll} setScroll={setScroll} />
       </Mask>
     </div>
   );

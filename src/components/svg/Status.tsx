@@ -4,7 +4,7 @@ import { css } from "@emotion/css";
 
 export const FrontStatus = () => {
   return (
-    <svg className="design-tool" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 458.57 423" width={500}>
+    <svg className="design-tool" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460.57 423" width={500}>
       <g>
         <g transform="translate(39.910793 14.0849)">
           <polygon points="-27.710626,-64 0.004374,-48 0.004374,-16 -27.710626,0 -55.425626,-16 -55.425626,-48 -27.710626,-64" transform="translate(216.369834 237.915101)" fill="rgba(0,0,0,0)" stroke="#fff" strokeDashoffset="10" strokeDasharray="4" />
