@@ -16,7 +16,7 @@ export default function App() {
         <Loading count={count} setCount={setCount} />
         <Header />
         <Scene count={count} setScroll={setScroll} />
-        <Gallery scroll={scroll} setScroll={setScroll} />
+        <Gallery count={count} scroll={scroll} setScroll={setScroll} />
       </Mask>
     </div>
   );

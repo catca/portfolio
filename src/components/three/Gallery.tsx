@@ -1,16 +1,15 @@
-import React, { Suspense, useMemo, useState, useEffect } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import Frames from './Frames';
 import Stars from './Stars';
 import Planet from './Planet';
-import state from '../../lib/store';
 
 import { useSelector } from 'react-redux';
 import { selectPage } from '../../lib/redux/page/pageSlice';
 
 const randomPos = (min = 5, max = -5) => Math.random() * (max - min) + min;
 
-const Gallery = ({ scroll, setScroll }: { scroll: boolean, setScroll: (value: boolean) => void }) => {
+const Gallery = ({ count, scroll, setScroll }: { count: number, scroll: boolean, setScroll: (value: boolean) => void }) => {
   const momentsArray = useMemo(() => Array.from({ length: 300 }, () => ({ position: [randomPos(), randomPos(), randomPos() + 2], speed: Math.random() * 0.5 + 0.25 })), []);
   const { currentPage } = useSelector(selectPage);
 
@@ -22,7 +21,7 @@ const Gallery = ({ scroll, setScroll }: { scroll: boolean, setScroll: (value: bo
         <pointLight intensity={1} position={[0, 10, 0]} castShadow decay={0} />
         <ambientLight />
         <spotLight position={[0, 15, 2]} angle={0.4} penumbra={1} intensity={1} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0001} />
-        {currentPage === 3 &&
+        {(currentPage === 3 || count < 10) &&
           <group position={[0, -0.5, 0]}>
             <Frames setScroll={setScroll} />
           </group>

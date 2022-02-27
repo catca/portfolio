@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 const Loading = ({ count, setCount }: { count: number, setCount: Dispatch<SetStateAction<number>> }) => {
   useInterval(() => {
     setCount(count + 1);
-  }, count < 200 ? 50 : null);
+  }, count < 133 ? 50 : null);
 
   return (
     <>
