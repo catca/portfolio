@@ -166,6 +166,7 @@ const Content = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
+  flex-wrap: wrap;
   &:not(:last-of-type) {
     margin-bottom: 12px;
   }

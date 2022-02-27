@@ -138,14 +138,8 @@ function Frame({ url, c = new THREE.Color(), intro, href, git, notion, img, expl
       setObjectName(e.object.name);
     }
   }
-  const onClickGit = () => {
-    document.location.href = git;
-  }
-  const onClickNotion = () => {
-    document.location.href = notion;
-  }
   const onClickLink = () => {
-    document.location.href = href;
+    window.open(href, '_blank');
   }
   return (
     <group {...props}>
@@ -181,11 +175,18 @@ function Frame({ url, c = new THREE.Color(), intro, href, git, notion, img, expl
               })
               }
             </Explanation>
-            <SeeMore>
-              <img src={'img/github.png'} alt={'github'} onClick={onClickGit} />
-              <img src={'img/notion.png'} alt={'notion'} onClick={onClickNotion} />
+          <SeeMore>
+              <A href={git} target="_blank" rel="noopener noreferrer">
+                <img src={'img/github.png'} alt={'github'} width={32} height={32}/>
+              </A>
+              <A href={notion} target="_blank" rel="noopener noreferrer">
+                <img src={'img/notion.png'} alt={'notion'} width={32} height={32}/>
+              </A>
               {
-                img !== '' && <img src={img} alt={intro} onClick={onClickLink} />
+                img !== '' &&
+                <A href={href} target="_blank" rel="noopener noreferrer">
+                  <img src={img} alt={intro} width={32} height={32} />
+                </A>
               }
             </SeeMore>
           </Container>
@@ -216,14 +217,22 @@ const Explanation = styled.div`
 
 const SeeMore = styled.div`
   margin-top: 4px;
-  & > img {
+  & > a {
     width: 32px;
     cursor: pointer;
     background-color: #FFF;
     border-radius: 50%;
     margin-right: 12px;
   }
-  & > img:last-of-type {
+  & > a:last-of-type {
     margin-right: 0px;
   }
+`;
+
+const A = styled.a`
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
 `;

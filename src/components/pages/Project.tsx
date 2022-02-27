@@ -12,7 +12,7 @@ const Project = ({setScroll}: {setScroll: (value: boolean) => void}) => {
         
       </H1>
       <Title>
-        <div onClick={onClick} style={{cursor: 'pointer'}}>저를 누르면 프로젝트를 자세히 볼 수 있어요!</div>
+        <div onClick={onClick} style={{cursor: 'pointer'}}>프로젝트 불러오기!</div>
       </Title>
     </Conatiner>
   );

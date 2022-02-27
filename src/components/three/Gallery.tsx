@@ -21,7 +21,7 @@ const Gallery = ({ count, scroll, setScroll }: { count: number, scroll: boolean,
         <pointLight intensity={1} position={[0, 10, 0]} castShadow decay={0} />
         <ambientLight />
         <spotLight position={[0, 15, 2]} angle={0.4} penumbra={1} intensity={1} castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0001} />
-        {(currentPage === 3 || count < 10) &&
+        {(!scroll || count < 10) &&
           <group position={[0, -0.5, 0]}>
             <Frames setScroll={setScroll} />
           </group>

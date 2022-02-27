@@ -7,7 +7,7 @@ import Scene from "../components/pages/Scene";
 import { AnimatedCursor } from "../components/common/AnimatedCursor";
 
 export default function App() {
-  const [scroll, setScroll] = useState<boolean>(false);
+  const [scroll, setScroll] = useState<boolean>(true);
   const [count, setCount] = useState<number>(0);
   return (
     <div>

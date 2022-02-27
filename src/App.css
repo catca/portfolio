@@ -10,7 +10,7 @@ body {
   color: #606063;
   overflow: hidden;
   font-family: "NotoSansKR", sans-serif;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
 }
 
 #root {
