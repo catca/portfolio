@@ -14,11 +14,11 @@ const images = [
     rotation: [0, 0, 0],
     url: '/img/gallery/portfolio.PNG',
     intro: 'portfolio',
-    href: 'http://localhost:3000',
-    git: '',
-    notion: '',
+    href: 'https://catca-portfolio.vercel.app/',
+    git: 'https://github.com/catca/portfolio',
+    notion: 'https://gorgeous-orbit-6d2.notion.site/b9eefeb27efe4a81acf301ad2dd5e9fc',
     img: '',
-    explanation: ` react, typescript를 기반으로 제작한 포트폴리오.\nthree.js를 사용하여 우주에 있는 듯한 느낌을 연출하였습니다.\nsvg를 활용하여 여러 가지 애니메이션을 주었습니다.`
+    explanation: ` react, typescript를 기반으로 제작한 포트폴리오.\nthree.js를 사용하여 우주에 있는 듯한 느낌을 연출하였습니다.\nsvg, js를 활용하여 여러 가지 애니메이션을 주었습니다.`
   },
   // Left
   {
@@ -28,7 +28,7 @@ const images = [
     intro: 'shiningstargram',
     href: 'https://shiningstargram.vercel.app',
     git: 'https://github.com/intsa-fullstack/shiningstar',
-    notion: '',
+    notion: 'https://gorgeous-orbit-6d2.notion.site/shiningstargram-2021-09-2022-01-52e32beacb3a49ae85862949941fd9ces',
     img: '/img/stargram.png',
     explanation: ' react, next, typescript를 기반으로 제작한 SNS 웹사이트 입니다.'
   },
@@ -40,7 +40,7 @@ const images = [
     intro: 'bunnymarket',
     href: 'http://bunnymarket.o-r.kr:3000',
     git: 'https://github.com/catca/bunnyMarket',
-    notion: '',
+    notion: 'https://gorgeous-orbit-6d2.notion.site/bunny-market-f49643edb7ce475a99f3f7f0a117e143',
     img: '/img/bunnymarket.jpg',
     explanation: ' react를 기반으로 제작한 중고마켓 플랫폼 입니다.\njavascript, spring으로 만든 졸업작품을 react로 리팩토링한 웹사이트 입니다.'
   },
