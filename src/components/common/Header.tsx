@@ -1,14 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPage, setCurrentPage } from "../../lib/redux/page/pageSlice";
 import styled from "@emotion/styled";
-import state from "../../lib/store";
 
 const header = [
   { title: "소개", current: 1 },
-  { title: "기술", current: 2 },
-  { title: "프로젝트", current: 3 },
-  { title: "마침", current: 4 },
+  { title: "프로젝트", current: 2 },
+  // { title: "기술", current: 3 },
+  { title: "마침", current: 3 },
 ];
 
 const Header: React.FC = () => {
